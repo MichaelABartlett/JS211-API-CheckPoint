@@ -7,7 +7,7 @@ console.log("testing file setup")
     //*****************************************************************************
     // this fetch is for getting player 1 image
 
-fetch("https://robohash.org/" + random + "?set=set2")
+fetch("https://robohash.org/" + random + "?set=set1")
     // this api returns binary data (ie the picture)
     .then(function (response) {
         return response.blob(); // extract the binary data / blob/ picture
@@ -23,7 +23,7 @@ fetch("https://robohash.org/" + random + "?set=set2")
 //*********************************************************************************
     // this fetch is for getting player 2 image
 
-    fetch("https://robohash.org/" + random + "?set=set1")
+    fetch("https://robohash.org/" + random + "?set=set4")
         // this api returns binary data (ie the picture)
         .then(function (response) {
             return response.blob(); // extract the binary data / blob/ picture
@@ -51,7 +51,7 @@ function handleSubmit1() {
             toggleDisplay[i].style.display = "none";
         } 
         else {
-            toggleDisplay[i].style.display = "block";
+            toggleDisplay[i].style.display = "block";1
         }
     }
 }
@@ -71,3 +71,28 @@ function handleSubmit2() {
         }
     }
 }
+
+// ****************************************************************************************
+
+ // this fetch is for getting a deck of cards
+
+ fetch("https://deckofcardsapi.com/api/deck/new/shuffle/?deck_count=1") // ?results=5 - this number represents how many name to process
+    .then(function(response){
+        // do something with the result
+        // extract the json from the response
+        console.log('response status: ', response.status)
+        return response.json();
+    }).then(function(json){
+        // do something with the json payload
+        // this is unpacking the json so it can be used
+        console.log("response payload: ", json)
+        processJson(json); // passing the (json) to the addToDom function
+})
+
+let processJson = function(json){
+        let deckOfCards = json // creates a variable for each individual contact ' person' in this case
+        console.log(deckOfCards)
+        console.log(deckOfCards.deck_id)
+        //processContact(contact);
+        
+    }
