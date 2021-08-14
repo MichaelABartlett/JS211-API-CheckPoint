@@ -1,0 +1,12 @@
+#label {
+    color: green;
+}
+
+.player-1-image {
+    width: 200px;
+    display: none;
+}
+.player-2-image {
+    width: 200px;
+    display: none;
+}
