@@ -14,7 +14,7 @@ fetch("https://robohash.org/" + random + "?set=set1")
     }).then(function (binaryData) {
         // make a temporary url that references this binary data
         const imageObjectURL = URL.createObjectURL(binaryData);
-        console.log(imageObjectURL)
+        console.log('player 1: ', imageObjectURL)
 
         // set this temporary url as the source for the image tag
         document.getElementById("player-1-image").src = imageObjectURL
@@ -30,7 +30,7 @@ fetch("https://robohash.org/" + random + "?set=set1")
         }).then(function (binaryData) {
             // make a temporary url that references this binary data
             const imageObjectURL2 = URL.createObjectURL(binaryData);
-            console.log(imageObjectURL2)
+            console.log('player 2: ' ,imageObjectURL2)
     
             // set this temporary url as the source for the image tag
             document.getElementById("player-2-image").src = imageObjectURL2
@@ -38,31 +38,36 @@ fetch("https://robohash.org/" + random + "?set=set1")
     
 // ********************************************************************************************************
 
-// below is the function to toggle the display of the 'address' class on and off
+// below is the function to toggle the display of the 'player-1-image' class on and off
 
 function handleSubmit1() {
+
     var toggleDisplay = document.querySelectorAll(".player-1-image");
     console.log('?' ,toggleDisplay)
     // toggleDisplay[0].style.display = "block";
     
-    for (let i = 0; i < toggleDisplay.length; i++) { // there must be a for loop to turn each individual 'address'
-        // in the node list
-        if (toggleDisplay[i].style.display === "block") {
-            toggleDisplay[i].style.display = "none";
+    
+        if (toggleDisplay[0].style.display === "block") {
+            toggleDisplay[0].style.display = "none";
         } 
         else {
-            toggleDisplay[i].style.display = "block";1
+            toggleDisplay[0].style.display = "block";
         }
-    }
+    
 }
+// look into conditional ternary operators to combind the two handlesubmit functions
+// function getFee(isMember) {
+//     return (isMember ? '$2.00' : '$10.00');
+//   }
+
 // ****************************************************************************************************88
 
-// below is the function to toggle the display of the 'address' class on and off
+// below is the function to toggle the display of the 'player-2-image' class on and off
 
 function handleSubmit2() {
     var toggleDisplay = document.querySelectorAll(".player-2-image");
     console.log(toggleDisplay)
-    for (let i = 0; i < toggleDisplay.length; i++) { // there must be a for loop to turn each individual 'address'
+    for (let i = 0; i < toggleDisplay.length; i++) { // there must be a for loop to turn each individual 'item'
         // in the node list
         if (toggleDisplay[i].style.display === "block") {
             toggleDisplay[i].style.display = "none";
@@ -75,8 +80,10 @@ function handleSubmit2() {
 // ****************************************************************************************
 
  // this fetch is for getting a deck of cards
+let deckId = '';
 
- fetch("https://deckofcardsapi.com/api/deck/new/shuffle/?deck_count=1") // ?results=5 - this number represents how many name to process
+
+ fetch("https://deckofcardsapi.com/api/deck/new/shuffle/?deck_count=1")
     .then(function(response){
         // do something with the result
         // extract the json from the response
@@ -86,13 +93,94 @@ function handleSubmit2() {
         // do something with the json payload
         // this is unpacking the json so it can be used
         console.log("response payload: ", json)
-        processJson(json); // passing the (json) to the addToDom function
+        
+        processJson(json); // passing the (json) to...
 })
 
 let processJson = function(json){
         let deckOfCards = json // creates a variable for each individual contact ' person' in this case
         console.log(deckOfCards)
-        console.log(deckOfCards.deck_id)
+        //console.log(deckOfCards.deck_id)
+        deckId = deckOfCards.deck_id
+        console.log('deck of cards id#: ' ,deckId)
+        console.log('2nd call for deck of cards id#: ' ,deckId)
+        fetchCall = ('https://deckofcardsapi.com/api/deck/'+ deckId + '/draw/?count=2')
+        console.log('fetchCall: ', fetchCall);
         //processContact(contact);
         
     }
+
+
+// ***************************************************************************************************
+
+// this fetch draws a card
+let fetchCall = ''; 
+let player1Card;
+let player2Card;
+let p1CardImg;
+let p2CardImg;
+
+// setTimeout(() => console.log('2nd call for deck of cards id#: ' ,deckId),500)
+// setTimeout(() => fetchCall = ('https://deckofcardsapi.com/api/deck/'+ deckId + '/draw/?count=2'),600)
+// setTimeout(() => console.log('fetchCall: ', fetchCall),700);
+
+
+function drawCards() {
+
+fetch(fetchCall)
+    .then(function(draw){
+        console.log('response status for draw: ', draw.status)
+        return draw.json();
+    }).then(function(json){
+        console.log("response payload for draw: ", json)
+        processDrawJson(json); // passing the (json) to the addToDom function
+})
+
+let processDrawJson = function(json){
+        let drawnCards = json // creates a variable for each individual contact ' person' in this case
+        console.log('The drawn cards: ', drawnCards)
+        //console.log(deckOfCards.deck_id)
+        player1Card = drawnCards.cards[0];
+        player2Card = drawnCards.cards[1];
+        console.log('player 1 card: ' ,player1Card)
+        console.log('player 2 card: ' ,player2Card)
+        p1CardImg = player1Card.image
+        p2CardImg = player2Card.image
+        console.log('p1CardImg: ', p1CardImg)
+        console.log('p2CardImg: ', p2CardImg)
+        document.getElementById("player-1-card").src = p1CardImg
+        document.getElementById("player-2-card").src = p2CardImg
+        //processContact(contact);
+        
+    }
+    funcDrawCards();
+    
+}
+
+// ****************************************************************************************************88
+
+// below is the function to display the class players cards
+
+function funcDrawCards() {
+    var drawDisplay1 = document.querySelectorAll(".player-1-card");
+    var drawDisplay2 = document.querySelectorAll(".player-2-card");
+    console.log('draw display: ', drawDisplay2)
+    for (let i = 0; i < drawDisplay2.length; i++) { // there must be a for loop to turn each individual 'address'
+        // in the node list
+        if (drawDisplay2[i].style.display === "block") {
+            drawDisplay2[i].style.display = "none";
+        } else {
+            drawDisplay2[i].style.display = "block";
+        }
+    }
+    for (let i = 0; i < drawDisplay1.length; i++) { // there must be a for loop to turn each individual 'address'
+        // in the node list
+        if (drawDisplay1[i].style.display === "block") {
+            drawDisplay1[i].style.display = "none";
+        } else {
+            drawDisplay1[i].style.display = "block";
+        }
+    }
+
+
+}
