@@ -164,23 +164,8 @@ let processDrawJson = function(json){
 function funcDrawCards() {
     var drawDisplay1 = document.querySelectorAll(".player-1-card");
     var drawDisplay2 = document.querySelectorAll(".player-2-card");
-    console.log('draw display: ', drawDisplay2)
-    for (let i = 0; i < drawDisplay2.length; i++) { // there must be a for loop to turn each individual 'address'
-        // in the node list
-        if (drawDisplay2[i].style.display === "block") {
-            drawDisplay2[i].style.display = "none";
-        } else {
-            drawDisplay2[i].style.display = "block";
-        }
-    }
-    for (let i = 0; i < drawDisplay1.length; i++) { // there must be a for loop to turn each individual 'address'
-        // in the node list
-        if (drawDisplay1[i].style.display === "block") {
-            drawDisplay1[i].style.display = "none";
-        } else {
-            drawDisplay1[i].style.display = "block";
-        }
-    }
-
-
+    console.log('drawDisplay1: ', drawDisplay1)
+    console.log('drawDisplay2: ', drawDisplay2)
+    drawDisplay1[0].style.display = "block"
+    drawDisplay2[0].style.display = "block"
 }

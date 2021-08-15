@@ -1,6 +1,22 @@
 #label {
     color: green;
 }
+h1 {
+    text-align: center;
+}
+
+.player-box {
+    display: flex;
+    justify-content: space-between;
+    flex-direction: row;
+    height: 300px;
+    width: 100%;
+}
+.player-buttons {
+    display: flex;
+    justify-content: space-between;
+
+}
 
 .player-1-image {
     width: 200px;
@@ -13,8 +29,33 @@
 .player-1-card {
     width: 200px;
     display: none;
+    margin-left: 30%;
 }
 .player-2-card {
     width: 200px;
     display: none;
+    margin-left: -30%;
+}
+
+.p-1-b {
+    width: 250px;
+
+}
+.p-2-b {
+    width: 250px;
+
+}
+.player1 {
+    display: flex;
+    flex-direction: row;
+}
+.player2 {
+    display: flex;
+    flex-direction: row-reverse;
+}
+.draw-button {
+    display: block;
+    font-size: 30px;
+    margin-left: auto;
+    margin-right: auto;
 }
