@@ -1,4 +1,4 @@
-console.log("testing file setup")
+//console.log("testing file setup")
 
 
 
@@ -14,7 +14,7 @@ fetch("https://robohash.org/" + random + "?set=set1")
     }).then(function (binaryData) {
         // make a temporary url that references this binary data
         const imageObjectURL = URL.createObjectURL(binaryData);
-        console.log('player 1: ', imageObjectURL)
+        //console.log('player 1: ', imageObjectURL)
 
         // set this temporary url as the source for the image tag
         document.getElementById("player-1-image").src = imageObjectURL
@@ -30,7 +30,7 @@ fetch("https://robohash.org/" + random + "?set=set1")
         }).then(function (binaryData) {
             // make a temporary url that references this binary data
             const imageObjectURL2 = URL.createObjectURL(binaryData);
-            console.log('player 2: ' ,imageObjectURL2)
+            //console.log('player 2: ' ,imageObjectURL2)
     
             // set this temporary url as the source for the image tag
             document.getElementById("player-2-image").src = imageObjectURL2
@@ -119,6 +119,8 @@ let player1Card;
 let player2Card;
 let p1CardImg;
 let p2CardImg;
+let p1CardValue;
+let p2CardValue;
 
 // setTimeout(() => console.log('2nd call for deck of cards id#: ' ,deckId),500)
 // setTimeout(() => fetchCall = ('https://deckofcardsapi.com/api/deck/'+ deckId + '/draw/?count=2'),600)
@@ -146,11 +148,15 @@ let processDrawJson = function(json){
         console.log('player 2 card: ' ,player2Card)
         p1CardImg = player1Card.image
         p2CardImg = player2Card.image
-        console.log('p1CardImg: ', p1CardImg)
-        console.log('p2CardImg: ', p2CardImg)
+        //console.log('p1CardImg: ', p1CardImg)
+        //console.log('p2CardImg: ', p2CardImg)
         document.getElementById("player-1-card").src = p1CardImg
         document.getElementById("player-2-card").src = p2CardImg
-        //processContact(contact);
+        p1CardValue = player1Card.value;
+        p2CardValue = player2Card.value;
+        console.log('player1 card value: ', p1CardValue)
+        console.log('player2 card value: ', p2CardValue)
+        processWin(p1CardValue,p2CardValue);
         
     }
     funcDrawCards();
@@ -168,4 +174,45 @@ function funcDrawCards() {
     console.log('drawDisplay2: ', drawDisplay2)
     drawDisplay1[0].style.display = "block"
     drawDisplay2[0].style.display = "block"
+}
+
+function processWin(p1V,p2V) {
+    if(p1V == 'JACK'){
+        p1V = '11'
+      
+    } else if (p1V == 'QUEEN'){
+        p1V = '12'
+
+    } else if (p1V == 'KING'){
+        p1V = '13'
+    } else if (p1V == 'ACE'){
+        p1V = '14'
+    } 
+     if(p2V == 'JACK'){
+         p2V = '11'
+     } else if (p2V == 'QUEEN'){
+         p2V = '12'
+     } else if (p2V == 'KING'){
+         p2V = '13'
+     } else if (p2V == 'ACE'){
+         p2V = '14'
+     }
+    console.log('?? p1V: ',p1V)
+    console.log('?? p2V: ',p2V)
+
+    
+
+    if(parseInt(p1V) > parseInt(p2V)){
+        let x = document.getElementById ('win-box');
+        x.innerHTML = "Player 1 Won!!!";
+        console.log('player 1 won')
+    } else if (parseInt(p1V) < parseInt(p2V)){
+        let x = document.getElementById ('win-box');
+        x.innerHTML = "Player 2 Won!!!";
+        console.log('player 2 won')
+    } else {
+        let x = document.getElementById ('win-box');
+        x.innerHTML = "It's a Tie!!";
+        console.log('there is a tie, draw again')
+    }
 }
