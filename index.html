@@ -31,7 +31,10 @@
                 <img id="player-1-card" class="player-1-card" src="" alt="player 1's card">
             </div>
         </div>
-        <p id="win-box"></p>
+        <div class="center-box">
+            <p id="win-box"></p>
+            <p id="game-over"></p>
+        </div>
         <div class="player2">
 
             <div>
@@ -44,14 +47,15 @@
     </article>
 
 
-
-
-
-
     <hr>
     <div>
         <input class="draw-button" type="button" value="Click to draw cards" onclick="drawCards()">
     </div>
+
+    <article class="totals">
+        <p id="p1ts"></p>
+        <p id="p2ts"></p>
+    </article>
 
 </body>
 <script src="./main.js"></script>

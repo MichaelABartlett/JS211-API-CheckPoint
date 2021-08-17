@@ -60,9 +60,39 @@ h1 {
     margin-left: auto;
     margin-right: auto;
 }
+.center-box {
+    /* border: 1px solid black; */
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    height: 300px;
+    width: 400px;
+}
 #win-box {
-    justify-content: center;
-    margin-top: 100px;
+    margin-top: 20px;
+    font-size: 60px;
+    color: red;
+}
+#game-over {
+    margin-top: 20px;
+    font-size: 60px;
+    color: red;
+}
+.totals {
+    display: flex;
+    border: 1px solid black;
+    height: 300px;
+    width: 100%;
+    justify-content: space-between;
+    flex-direction: row;
+}
+#p1ts {
+    margin: 5%;
+    font-size: 60px;
+    color: red;
+}
+#p2ts {
+    margin: 5%;
     font-size: 60px;
     color: red;
 }

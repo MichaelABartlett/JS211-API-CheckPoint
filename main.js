@@ -121,6 +121,7 @@ let p1CardImg;
 let p2CardImg;
 let p1CardValue;
 let p2CardValue;
+let count = 0;
 
 // setTimeout(() => console.log('2nd call for deck of cards id#: ' ,deckId),500)
 // setTimeout(() => fetchCall = ('https://deckofcardsapi.com/api/deck/'+ deckId + '/draw/?count=2'),600)
@@ -159,6 +160,7 @@ let processDrawJson = function(json){
         processWin(p1CardValue,p2CardValue);
         
     }
+    
     funcDrawCards();
     
 }
@@ -166,6 +168,9 @@ let processDrawJson = function(json){
 // ****************************************************************************************************88
 
 // below is the function to display the class players cards
+
+let p1ts = 0;
+let p2ts = 0;
 
 function funcDrawCards() {
     var drawDisplay1 = document.querySelectorAll(".player-1-card");
@@ -179,15 +184,14 @@ function funcDrawCards() {
 function processWin(p1V,p2V) {
     if(p1V == 'JACK'){
         p1V = '11'
-      
     } else if (p1V == 'QUEEN'){
         p1V = '12'
-
     } else if (p1V == 'KING'){
         p1V = '13'
     } else if (p1V == 'ACE'){
         p1V = '14'
     } 
+
      if(p2V == 'JACK'){
          p2V = '11'
      } else if (p2V == 'QUEEN'){
@@ -197,22 +201,36 @@ function processWin(p1V,p2V) {
      } else if (p2V == 'ACE'){
          p2V = '14'
      }
-    console.log('?? p1V: ',p1V)
-    console.log('?? p2V: ',p2V)
-
     
 
     if(parseInt(p1V) > parseInt(p2V)){
         let x = document.getElementById ('win-box');
         x.innerHTML = "Player 1 Won!!!";
         console.log('player 1 won')
+        
+        p1ts += 1;
+        console.log('p1ts: ', p1ts)
+        let p1 = document.getElementById('p1ts');
+        p1.innerHTML = 'Player 1 score: ',p1ts;
     } else if (parseInt(p1V) < parseInt(p2V)){
         let x = document.getElementById ('win-box');
         x.innerHTML = "Player 2 Won!!!";
         console.log('player 2 won')
+        
+        p2ts += 1;
+        console.log('p2ts: ',p2ts)
+        let p2 = document.getElementById('p2ts');
+        p2.innerHTML = 'Player 2 score: ',p2ts;
     } else {
-        let x = document.getElementById ('win-box');
-        x.innerHTML = "It's a Tie!!";
+        let y = document.getElementById ('win-box');
+        y.innerHTML = "It's a Tie!!";
         console.log('there is a tie, draw again')
     }
+    count += 1;
+    console.log('count: ', count);
+    if (count === 26){
+        console.log('game over')
+        let z = document.getElementById ('game-over');
+        z.innerHTML = "Game Over";
+    } 
 }
