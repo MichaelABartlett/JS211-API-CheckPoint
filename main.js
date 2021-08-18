@@ -40,20 +40,16 @@ fetch("https://robohash.org/" + random + "?set=set1")
 
 // below is the function to toggle the display of the 'player-1-image' class on and off
 
-function handleSubmit1() {
-
-    var toggleDisplay = document.querySelectorAll(".player-1-image");
+function handleSubmit1(classname) {
+    var toggleDisplay = document.querySelectorAll(classname);
     console.log('?' ,toggleDisplay)
     // toggleDisplay[0].style.display = "block";
-    
-    
         if (toggleDisplay[0].style.display === "block") {
             toggleDisplay[0].style.display = "none";
         } 
         else {
             toggleDisplay[0].style.display = "block";
         }
-    
 }
 // look into conditional ternary operators to combind the two handlesubmit functions
 // function getFee(isMember) {
@@ -64,19 +60,29 @@ function handleSubmit1() {
 
 // below is the function to toggle the display of the 'player-2-image' class on and off
 
-function handleSubmit2() {
-    var toggleDisplay = document.querySelectorAll(".player-2-image");
-    console.log(toggleDisplay)
-    for (let i = 0; i < toggleDisplay.length; i++) { // there must be a for loop to turn each individual 'item'
-        // in the node list
-        if (toggleDisplay[i].style.display === "block") {
-            toggleDisplay[i].style.display = "none";
-        } else {
-            toggleDisplay[i].style.display = "block";
-        }
-    }
-}
+// function handleSubmit2() {
+//     var toggleDisplay = document.querySelectorAll(".player-2-image");
+//     console.log(toggleDisplay)
+//         if (toggleDisplay[0].style.display === "block") {
+//             toggleDisplay[0].style.display = "none";
+//         } else {
+//             toggleDisplay[0].style.display = "block";
+//         }
+    
+// }
 
+// function handleSubmit2() {
+//     var toggleDisplay = document.querySelectorAll(".player-2-image");
+//     console.log(toggleDisplay)
+//     for (let i = 0; i < toggleDisplay.length; i++) { // there must be a for loop to turn each individual 'item'
+//         // in the node list
+//         if (toggleDisplay[i].style.display === "block") {
+//             toggleDisplay[i].style.display = "none";
+//         } else {
+//             toggleDisplay[i].style.display = "block";
+//         }
+//     }
+// }
 // ****************************************************************************************
 
  // this fetch is for getting a deck of cards
@@ -210,17 +216,16 @@ function processWin(p1V,p2V) {
         
         p1ts += 1;
         console.log('p1ts: ', p1ts)
-        let p1 = document.getElementById('p1ts');
-        p1.innerHTML = 'Player 1 score: ',p1ts;
+        document.getElementById('p1ts').innerHTML = 'Player 1 score: ' + p1ts;
+        //let p1 = document.getElementById('p1ts');
+        //p1.innerHTML = 'Player 1 score: ',toString(p1ts) ;
     } else if (parseInt(p1V) < parseInt(p2V)){
         let x = document.getElementById ('win-box');
         x.innerHTML = "Player 2 Won!!!";
         console.log('player 2 won')
-        
         p2ts += 1;
-        console.log('p2ts: ',p2ts)
-        let p2 = document.getElementById('p2ts');
-        p2.innerHTML = 'Player 2 score: ',p2ts;
+        console.log('p2ts: ',p2ts);
+        document.getElementById('p2ts').innerHTML = 'Player 2 score: '+ p2ts;
     } else {
         let y = document.getElementById ('win-box');
         y.innerHTML = "It's a Tie!!";
