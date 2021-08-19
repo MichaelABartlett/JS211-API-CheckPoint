@@ -231,3 +231,18 @@ function processWin(p1V,p2V) {
     } 
 }
 
+
+if (typeof describe === 'function') {
+
+    describe('check numeric value for  face card', () => {
+      it('check if player 1 gets a Queen', () => {
+        p1V == 'QUEEN';
+        assert.deepEqual(p1V,'12');
+      });
+      it('should alternate between players', () => {
+        p1V == 'QUEEN';
+        assert.deepEqual(p1V,'12');
+      });
+    })
+
+}
