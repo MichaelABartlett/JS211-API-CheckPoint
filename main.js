@@ -2,12 +2,16 @@
 
 
 
-    let random = Math.random();
+    
+    // setting the image types to something in case the user does not make a slelction
+    // these are called in the fetch calls
+    let p1Type = "?set=set1";
+    let p2Type = "?set=set4";
 
-    //*****************************************************************************
-    // this fetch is for getting player 1 image
-
-fetch("https://robohash.org/" + random + "?set=set1")
+    function imageSelect1(imageType) {
+        let random = Math.random();
+        p1Type = imageType;
+        fetch("https://robohash.org/" + random + p1Type)
     // this api returns binary data (ie the picture)
     .then(function (response) {
         return response.blob(); // extract the binary data / blob/ picture
@@ -17,11 +21,19 @@ fetch("https://robohash.org/" + random + "?set=set1")
         // set this temporary url as the source for the image tag
         document.getElementById("player-1-image").src = imageObjectURL
     })
+    }
+
+    //*****************************************************************************
+    // this fetch is for getting player 1 image
+
+
 
 //*********************************************************************************
     // this fetch is for getting player 2 image
-
-    fetch("https://robohash.org/" + random + "?set=set4")
+    function imageSelect2(imageType) {
+        let random = Math.random();
+        p2Type = imageType;
+    fetch("https://robohash.org/" + random + p2Type)
         // this api returns binary data (ie the picture)
         .then(function (response) {
             return response.blob(); // extract the binary data / blob/ picture
@@ -31,7 +43,7 @@ fetch("https://robohash.org/" + random + "?set=set1")
             // set this temporary url as the source for the image tag
             document.getElementById("player-2-image").src = imageObjectURL2
         })
-    
+    }
 // ********************************************************************************************************
 
 // below is the function to toggle the display of the 'player-1-image' and 'player-2-image' class on and off
@@ -157,6 +169,35 @@ function funcDrawCards() {
 }
 
 function processWin(p1V,p2V) {
+
+    // each round of play the count is added to
+    // this will allow the ganme to end when the entire deck is dealed out
+    count += 1;
+    //console.log('count: ', count);
+    if (count === 26){ //26
+        //console.log('game over')
+        // posting to the DOM that the game is over
+        let z = document.getElementById ('game-over');
+        z.innerHTML = "Game Over";
+        // turning off the style.display for the draw button so it no longer is available when the game is over
+        document.getElementById('draw-b').style.display = "none";
+        // here we are posting the player that had the most wins, that player wins the series
+        if(p1ts === p2ts){
+            let w1 = document.getElementById('win-box');
+            w1.innerHTML = 'The series was a TIE!!' ;
+            return;
+        } else if(p1ts > p2ts){
+            let w2 = document.getElementById('win-box');
+            w2.innerHTML = 'Player 1 won the series!!' ;
+            return;
+        } else {
+            let w3 = document.getElementById('win-box');
+            w3.innerHTML = 'Player 2 won the series!!'; 
+            return;
+        }
+    } 
+
+
     // these if statments put a numerical value on the face cards so it would be easier
     // to determine the winner
     if(p1V == 'JACK'){
@@ -189,6 +230,7 @@ function processWin(p1V,p2V) {
         //console.log('p1ts: ', p1ts)
         // posting the total wins for the player to the DOM
         document.getElementById('p1ts').innerHTML = 'Player 1 score: ' + p1ts;
+        return 'player 1 won'
     } else if (parseInt(p1V) < parseInt(p2V)){
         // posting the player won in the center-box div using the id='win-box'
         let y = document.getElementById ('win-box');
@@ -196,53 +238,56 @@ function processWin(p1V,p2V) {
         //console.log('player 2 won')
         // adding the players win total
         p2ts += 1;
-        //console.log('p2ts: ',p2ts);
+        //console.log('p2ts: ',p2ts);x
         // posting the total wins for the player to the DOM
         document.getElementById('p2ts').innerHTML = 'Player 2 score: '+ p2ts;
+        return 'player 2 won'
     } else {
         // if no winner posting that there was a tie
         // there is no addition to player win totals
         let z = document.getElementById ('win-box');
         z.innerHTML = "It's a Tie!!";
+        return 'its a tie'
         //console.log('there is a tie, draw again')
     }
-    // each round of play the count is added to
-    // this will allow the ganme to end when the entire deck is dealed out
-    count += 1;
-    //console.log('count: ', count);
-    if (count === 26){
-        //console.log('game over')
-        // posting to the DOM that the game is over
-        let z = document.getElementById ('game-over');
-        z.innerHTML = "Game Over";
-        // turning off the style.display for the draw button so it no longer is available when the game is over
-        document.getElementById('draw-b').style.display = "none";
-        // here we are posting the player that had the most wins, that player wins the series
-        if(p1ts === p2ts){
-            let w1 = document.getElementById('win-box');
-            w1.innerHTML = 'The series was a TIE!!' ;
-        } else if(p1ts > p2ts){
-            let w2 = document.getElementById('win-box');
-            w2.innerHTML = 'Player 1 won the series!!' ;
-        } else {
-            let w3 = document.getElementById('win-box');
-            w3.innerHTML = 'Player 2 won the series!!'; 
-        }
-    } 
+    
+    
 }
 
+// ************************** TEST *****************************************************
+
+// there is something with running test and fetch
+// I thought it was axios because we are using node but that has not fixed it
+// I still think that has something to do with it
 
 if (typeof describe === 'function') {
 
-    describe('check numeric value for  face card', () => {
+    describe('check numeric value for a face card', () => {
       it('check if player 1 gets a Queen', () => {
         p1V == 'QUEEN';
         assert.deepEqual(p1V,'12');
       });
-      it('should alternate between players', () => {
-        p1V == 'QUEEN';
-        assert.deepEqual(p1V,'12');
+      it('check numeric value for a face card', () => {
+        p2V == 'ACE';
+        assert.deepEqual(p2V,'14');
       });
+    })
+    describe('check for a round winner', () => {
+        it('post player 1 won a round', () => {
+          let p1V = '8';
+          let p2V = '7'
+          assert.deepEqual(processWin(p1V,p2V),'player 1 won');
+        });
+        it('post player 2 won a round', () => {
+            let p1V = '7';
+            let p2V = '8'
+            assert.deepEqual(processWin(p1V,p2V),'player 2 won');
+          });
+          it('post if the round was a tie', () => {
+            let p1V = '10';
+            let p2V = '10'
+            assert.deepEqual(processWin(p1V,p2V),'its a tie');
+          });
     })
 
 }
