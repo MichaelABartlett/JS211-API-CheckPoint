@@ -256,9 +256,11 @@ function processWin(p1V,p2V) {
 
 // ************************** TEST *****************************************************
 
-// there is something with running test and fetch
-// I thought it was axios because we are using node but that has not fixed it
-// I still think that has something to do with it
+// since the test run in node I could not use fetch
+// I downloaded the axios module and changed the fetch to axios and the test will run
+// for some reason all values are undefined
+// I am sure it has something to do with axios but I jsut can not figure out what to do with it
+// of course there is the possibility that the test are not written correctly either
 
 if (typeof describe === 'function') {
 
